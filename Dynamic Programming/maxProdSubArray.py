@@ -47,6 +47,5 @@ def maxProdNZ(arr):
     return min_prod
 
 
-
 arr = [1,2,-3,-4,-5]
 print(maxProdNZ(arr))
