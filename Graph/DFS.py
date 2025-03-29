@@ -6,7 +6,7 @@ def dfs(adj_list, start, visited=None):
     print(start, end=' ')
 
     for node in adj_list.get(start, []):
-        if node not in visited:  # Fixed typo: 'visted' -> 'visited'
+        if node not in visited:
             dfs(adj_list, node, visited)
 
 def main():
