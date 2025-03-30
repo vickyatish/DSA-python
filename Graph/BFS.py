@@ -17,9 +17,6 @@ def BFS(graph, node):
 				print(neighbour)
 				queue.append(neighbour)
 
-
-
-
 if __name__ == '__main__':
 
 	graph = {
