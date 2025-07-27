@@ -1,40 +1,37 @@
-def subset_sum(nums, target, index):
+def subset_sum(nums, target):
+
+
+    n=len(nums)
+    dp = [[False] * (target+1) for i in range(n+1)]
+
+    for i in range(n+1):
+        dp[i][0] = True
+
+    for i in range(1, n + 1):
+        for j in range(1, target + 1):
+            if nums[i - 1] <= j:
+                # Include or exclude current number
+                dp[i][j] = dp[i - 1][j] or dp[i - 1][j - nums[i - 1]]
+            else:
+                # Can't include, so just exclude
+                dp[i][j] = dp[i - 1][j]
     
-    if target == 0:
-        return True
 
-    if index == len(nums):
-        return False
+    return dp[n][target]
 
-    take = subset_sum(nums, target - nums[index], index+1)
-    notTake = subset_sum(nums, target, index+1)
-
-    return bool(take + notTake)
 
 def main():
     test_cases = [
-        ([2, 3, 7, 8, 10], 11, True),
-        ([1, 2, 3, 4, 5], 9, True),
-        ([1, 2, 3], 6, True),
-        ([1, 2, 3], 7, False),
-        ([5, 3, 2], 0, True),
-        ([10, 20, 30], 25, False),
-        ([7, 14], 21, True),
-        ([], 0, True),
-        ([], 5, False),
-        ([1, 1, 1, 1, 1], 3, True),
+        ([3, 34, 4, 12, 5, 2], 9),     # True: subset [4, 5] or [3, 4, 2]
+        ([1, 2, 3, 7], 6),             # True: subset [1, 2, 3]
+        ([1, 2, 7, 1, 5], 10),         # True: subset [2, 7, 1]
+        ([1, 3, 5, 9], 14),            # True: [5, 9]
+        ([2, 4, 6, 8], 5),             # False: no subset sums to 5
     ]
 
-    passed = 0
-
-    for i, (nums, target, expected) in enumerate(test_cases, 1):
-        result = subset_sum(nums, target, 0)
-        is_pass = result == expected
-        if is_pass:
-            passed += 1
-        print(f"Test case {i}: nums={nums}, target={target} => Result: {result} (Expected: {expected}) => {'PASS' if is_pass else 'FAIL'}")
-
-    print(f"\nTotal Passed: {passed}/{len(test_cases)}")
+    for nums, target in test_cases:
+        result = subset_sum(nums, target)
+        print(f"Subset sum of {target} in {nums} → {result}")
 
 if __name__ == "__main__":
     main()
